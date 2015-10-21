@@ -161,6 +161,71 @@ var messenger = {
       $.extend(cfgs, (opts || {}));
       return $.ajax(cfgs);
     },
+
+    /**
+     * Request contact relationship to other user
+     *
+     * @param  {Number} userId other userID
+     * @return {Object}        jquery ajax response promisse
+     */
+    request: function(userId, opts) {
+      var cfgs = {
+        url: we.messenger.host + '/api/v1/user/'+userId+'/contact-request',
+        type: 'POST',
+        dataType: 'json'
+      };
+      $.extend(cfgs, (opts || {}));
+      return $.ajax(cfgs);
+    }
+  },
+
+  user: {
+
+    /**
+     * Find users from API server,
+     *
+     * @param {Object} opts
+     * @return {Object} jQuery ajax request promisse
+     */
+    findAll: function(opts){
+      var cfgs = {
+        url: we.messenger.host + '/user'
+      };
+      $.extend(cfgs, (opts || {}) );
+      return $.ajax(cfgs);
+    },
+
+    /**
+     * Find one user from API server,
+     *
+     * @param {Number} id   user id
+     * @param {Object} opts
+     * @return {Object} jQuery ajax request promisse
+     */
+    findOne: function(id, opts) {
+      var cfgs = {
+        url: we.messenger.host + '/user/'+id
+      };
+      $.extend(cfgs, (opts || {}));
+      return $.ajax(cfgs);
+    },
+
+    /**
+     * Update user data in API server
+     *
+     * @param {Number} id   user id
+     * @param {Object} opts
+     * @return {Object} jQuery ajax request promisse
+     */
+    update: function(id, opts) {
+      var cfgs = {
+        url: we.messenger.host + '/user/'+id,
+        type: 'PUT',
+        dataType: 'json'
+      };
+      $.extend(cfgs, (opts || {}));
+      return $.ajax(cfgs);
+    }
   },
 
   init: function(options) {
