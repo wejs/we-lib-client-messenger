@@ -1,0 +1,23 @@
+{
+  "name": "we-lib-client-messenger",
+  "version": "0.0.0",
+  "authors": [
+    "albertosouza <alberto.souza.99@gmail.com>"
+  ],
+  "description": "We.js client side lib for connect in messenger servers",
+  "main": "dist/we-messenger.js",
+  "keywords": [
+    "We.js",
+    "messenger",
+    "clientside"
+  ],
+  "license": "MIT",
+  "homepage": "http://wejs.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
