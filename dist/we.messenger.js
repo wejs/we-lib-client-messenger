@@ -139,7 +139,7 @@ var messenger = {
      * @param {Object} opts
      * @return {Object} jQuery ajax request promisse
      */
-    findAll: function(opts){
+    findAll: function findAll(opts){
       var cfgs = {
         url: we.messenger.host + '/contact'
       };
@@ -148,17 +148,18 @@ var messenger = {
     },
 
     /**
-     * Find one room from API server,
+     * Find rooms from API server,
      *
-     * @param {Number} id   room id
      * @param {Object} opts
      * @return {Object} jQuery ajax request promisse
      */
-    findOne: function(id, opts) {
+    findAllPendingContacts: function findAllPendingContacts(opts){
       var cfgs = {
-        url: we.messenger.host + '/contact/'+id
+        method: 'GET',
+        url: we.messenger.host + '/contact',
+        data: { status: 'requested' }
       };
-      $.extend(cfgs, (opts || {}));
+      $.extend(cfgs, (opts || {}) );
       return $.ajax(cfgs);
     },
 
@@ -168,9 +169,26 @@ var messenger = {
      * @param  {Number} userId other userID
      * @return {Object}        jquery ajax response promisse
      */
-    request: function(userId, opts) {
+    request: function request( userId, opts) {
       var cfgs = {
         url: we.messenger.host + '/api/v1/user/'+userId+'/contact-request',
+        type: 'POST',
+        dataType: 'json'
+      };
+      $.extend(cfgs, (opts || {}));
+      return $.ajax(cfgs);
+    },
+
+
+    /**
+     * Accept contact relationship with other user
+     *
+     * @param  {Number} userId other userID
+     * @return {Object}        jquery ajax response promisse
+     */
+    accept: function accept(userId, opts) {
+      var cfgs = {
+        url: we.messenger.host + '/api/v1/user/'+userId+'/contact-accept',
         type: 'POST',
         dataType: 'json'
       };
