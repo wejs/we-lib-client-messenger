@@ -7,13 +7,6 @@
 var messenger = {
 
   host: null,
-  /**
-   * Websockets
-   * @type {Object}
-   */
-  ws: {},
-
-  cache: {},
 
   room : {
 
@@ -95,8 +88,6 @@ var messenger = {
   },
 
   message : {
-    cache: {},
-
     /**
      * Find messages from API server,
      *
@@ -131,8 +122,6 @@ var messenger = {
   },
 
   contact: {
-    cache: {},
-
     /**
      * Find rooms from API server,
      *
@@ -189,7 +178,23 @@ var messenger = {
     accept: function accept(userId, opts) {
       var cfgs = {
         url: we.messenger.host + '/api/v1/user/'+userId+'/contact-accept',
-        type: 'POST',
+        type: 'GET',
+        dataType: 'json'
+      };
+      $.extend(cfgs, (opts || {}));
+      return $.ajax(cfgs);
+    },
+
+    /**
+     * Ignore contact relationship with other user
+     *
+     * @param  {Number} userId other userID
+     * @return {Object}        jquery ajax response promisse
+     */
+    ignore: function ignore(userId, opts) {
+      var cfgs = {
+        url: we.messenger.host + '/api/v1/user/'+userId+'/contact-ignore',
+        type: 'GET',
         dataType: 'json'
       };
       $.extend(cfgs, (opts || {}));
@@ -243,6 +248,23 @@ var messenger = {
       };
       $.extend(cfgs, (opts || {}));
       return $.ajax(cfgs);
+    }
+  },
+
+  notification: {
+    findAll: function(opts) {
+      var cfgs = {
+        url: we.messenger.host + '/api/v1/notify/notification'
+      };
+      $.extend(cfgs, (opts || {}) );
+      return $.ajax(cfgs);
+    },
+    setReadStatus: function(id, read) {
+      return $.ajax({
+        url: we.messenger.host + '/api/v1/notify/'+id+'/'+ String(read),
+        type: 'POST',
+        dataType: 'json'
+      });
     }
   },
 
